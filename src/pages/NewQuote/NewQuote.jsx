@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { useStateContext } from '../../context/StateContext';
-import "./NewQuote.css";
+import './NewQuote.css';
 
 const NewQuote = () => {
   const [quoteText, setQuoteText] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(''); // State to manage success message
   const { state } = useStateContext();
   const navigate = useNavigate();
 
@@ -52,7 +53,6 @@ const NewQuote = () => {
         return;
       }
 
-    
       await axios.post(
         'https://assignment.stage.crafto.app/postQuote',
         {
@@ -61,7 +61,7 @@ const NewQuote = () => {
         },
         {
           headers: {
-            Authorization: `${state.token}`, 
+            Authorization: `${state.token}`,
             'Content-Type': 'application/json',
           },
         }
@@ -69,7 +69,11 @@ const NewQuote = () => {
 
       setQuoteText('');
       setImageFile(null);
-      navigate('/quote');
+      setSuccessMessage('Quote posted successfully!'); // Show success message
+
+      setTimeout(() => {
+        navigate('/quote');
+      }, 2000);
     } catch (err) {
       setError(
         err.response?.status === 401
@@ -85,7 +89,7 @@ const NewQuote = () => {
     if (!state.token) {
       navigate('/');
     }
-  }, [state])
+  }, [state, navigate]);
 
   return (
     <div className="new-quote-container">
@@ -103,7 +107,9 @@ const NewQuote = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="imageUpload" className='upload'>Upload Image:</label>
+          <label htmlFor="imageUpload" className="upload">
+            Upload Image:
+          </label>
           <input
             type="file"
             id="imageUpload"
@@ -114,6 +120,7 @@ const NewQuote = () => {
         </div>
 
         {error && <p className="error">{error}</p>}
+        {successMessage && <p className="success">{successMessage}</p>} {/* Display success message */}
 
         <button type="submit" disabled={isUploading}>
           {isUploading ? 'Uploading...' : 'Create Quote'}
