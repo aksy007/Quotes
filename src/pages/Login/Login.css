@@ -1,0 +1,82 @@
+.container {
+    background-color: rgba(255, 255, 255, 0.87);
+    border-radius: 10px;
+    width: 500px;
+    height: max-content;
+    min-width: max-content;
+    display: block;
+    padding: 16px;
+}
+
+.header {
+    color: #242424;
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 12px;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+
+    input {
+        background: #242424;
+        border: none;
+        outline: none;
+        border-bottom: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 10px 16px;
+        margin: 24px 24px 0 24px;
+    }
+
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+
+    /* Firefox */
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+}
+
+.submitContainer {
+    display: grid;
+    place-content: center;
+}
+
+.submit {
+    width: 120px;
+    min-width: max-content;
+    height: 28px;
+    color: #ccc;
+    background: #242424;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 24px;
+    padding: 4px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.submit:hover {
+    color: #242424;
+    background-color: #ccc;
+}
+
+.error {
+    color: #d9534f;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    text-align: center;
+}

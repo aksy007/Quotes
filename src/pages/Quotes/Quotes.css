@@ -1,0 +1,83 @@
+.quotes-page {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .quotes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .quote-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .quote-image-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+  }
+  
+  .quote-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .quote-text-overlay {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    color: white;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+  }
+  
+  .quote-info {
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .quote-username {
+    font-weight: bold;
+  }
+  
+  .quote-date {
+    color: #888;
+    font-size: 12px;
+  }
+  
+  /* Floating Action Button (FAB) */
+  .fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+  }
+  
+  .fab:hover {
+    background-color: #0056b3;
+  }
+  
