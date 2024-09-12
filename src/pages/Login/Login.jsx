@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useStateContext } from "../../context/StateContext";
 import "./Login.css";
 
 const Login = () => {
@@ -8,6 +9,7 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const { dispatch } = useStateContext();
 
     const handleUserInputChange = (e) => {
         setUser(e.target.value);
@@ -16,7 +18,6 @@ const Login = () => {
 
     const handleOtpInputChange = (e) => {
         const value = e.target.value;
-        // regex to allow only digits and restrict to 4 characters
         if (/^\d{0,4}$/.test(value)) {
             setOtp(value);
             setError('');
@@ -27,9 +28,7 @@ const Login = () => {
         e.preventDefault();
         setError('');
         
-        // Check if OTP and username are not empty
         if (!!otp && !!user) {
-            // Call API if credentials are valid
             setLoading(true);
             try {
                 const response = await fetch('https://assignment.stage.crafto.app/login', {
@@ -45,12 +44,14 @@ const Login = () => {
 
                 const data = await response.json();
 
-                // Check if response is successful
                 if (response.ok) {
-                    // Navigate user to the /quote route on successful login
+                    const token = data?.token;
+                    dispatch({ type: 'SET_USER', payload: user });
+                    if(token) {
+                        dispatch({ type: 'SET_TOKEN', payload: token});
+                    }
                     navigate('/quote');
                 } else {
-                    // Handle errors (e.g., invalid OTP or username)
                     setError(data.message || 'Login failed, please try again.');
                 }
             } catch (err) {

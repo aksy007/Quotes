@@ -1,4 +1,13 @@
+
+Steps to Run Application:
+1. npm i
+2. npm run dev
+
+
+
 # Crafto.app assignment
+
+
 To create an user - use a unique username and pass OTP as 1234
 curl --location 'https://assignment.stage.crafto.app/login' \
 --header 'Content-Type: application/json' \

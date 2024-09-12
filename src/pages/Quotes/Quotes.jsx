@@ -1,31 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Quotes.css'; // Create and style this CSS file as needed
+import { useStateContext } from '../../context/StateContext';
+import './Quotes.css'; 
+import { useNavigate } from 'react-router';
 
 const Quotes = () => {
   const [quotes, setQuotes] = useState([]);
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const { state } = useStateContext();
+  const navigate = useNavigate();
   const limit = 20;
 
-  // Fetch quotes from the API
+
+  useEffect(() => {
+    if (!state.token) {
+      navigate('/');
+    }
+  }, [state])
+
   const fetchQuotes = async () => {
-    if (!hasMore) return; // Stop fetching if no more quotes are available
+    if (!hasMore) return;
     setLoading(true);
     try {
       const response = await axios.get(
         `https://assignment.stage.crafto.app/getQuotes?limit=${limit}&offset=${offset}`,
         {
           headers: {
-            Authorization: '<TOKEN>', 
+            Authorization: `${state.token}`, 
           },
         }
       );
-      const fetchedQuotes = response.data;
-      console.log('first', response)
+      const data = response.data;
+      const fetchedQuotes = data?.data || [];
       if (fetchedQuotes.length === 0) {
-        setHasMore(false); // Stop pagination if no more data
+        setHasMore(false); 
       } else {
         setQuotes((prevQuotes) => [...prevQuotes, ...fetchedQuotes]);
         setOffset((prevOffset) => prevOffset + limit);
@@ -39,8 +49,10 @@ const Quotes = () => {
 
 
   useEffect(() => {
-    fetchQuotes();
-  }, []);
+    if(state.token) {
+      fetchQuotes();
+    }
+  }, [state]);
 
   
   const handleScroll = () => {
@@ -73,14 +85,14 @@ const Quotes = () => {
             </div>
             <div className="quote-info">
               <p className="quote-username">{quote.username}</p>
-              <p className="quote-date">{new Date(quote.created_at).toLocaleDateString()}</p>
+              <p className="quote-date">{new Date(quote.createdAt).toLocaleDateString()}</p>
             </div>
           </div>
         ))}
       </div>
 
      
-      <button className="fab" onClick={() => alert('Create new quote')}>
+      <button className="fab" onClick={() => navigate('/new-quote')}>
         +
       </button>
 
